@@ -1,8 +1,6 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  /* REMOVED max-width, margin, padding, and text-align */
+  /* Bootstrap's <Container> will manage this now */
 }
 
 .logo {
@@ -34,7 +32,7 @@
 }
 
 .card {
-  padding: 2em;
+  /* REMOVED default padding, Bootstrap's Card component handles this */
 }
 
 .read-the-docs {
