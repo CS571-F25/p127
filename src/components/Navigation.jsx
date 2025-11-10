@@ -6,7 +6,8 @@ export default function Navigation() {
     return (
         <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
             <Container>
-                <Navbar.Brand as={Link} to="/">Visit Hahoe</Navbar.Brand>
+                {/* Updated the brand to "Visit Inje" */}
+                <Navbar.Brand as={Link} to="/">Visit Inje</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">

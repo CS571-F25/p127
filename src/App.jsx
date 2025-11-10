@@ -3,7 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 
 // Import Components
-import Navigation from './components/Nav'
+import Navigation from './components/Navigation'
 import Home from './components/Home'
 import Locations from './components/Locations'
 import Board from './components/Board'
@@ -11,7 +11,7 @@ import Board from './components/Board'
 function App() {
   // Use HashRouter for GitHub Pages
   return (
-    <HashRouter>
+    <HashRouter>a
       {/* Navigation bar is outside of Routes, so it stays on every page */}
       <Navigation />
 

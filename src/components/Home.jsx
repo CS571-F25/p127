@@ -12,7 +12,7 @@ const recommendations = {
         },
         weekend: {
             title: "Winter Ice Fishing Festival",
-            description: "Join the locals at the annual ice fishing festival! Try to catch your own fish and eat it fresh.",
+            description: "Join the locals at the annual ice fishing festival! Inje is famous for its Bingeo (smelt) fishing.",
             img: "https://placehold.co/600x400/d1e3e6/black?text=Ice+Fishing"
         }
     },
@@ -30,21 +30,21 @@ const recommendations = {
     },
     Summer: {
         weekday: {
-            title: "Local Market & Cooking Class",
-            description: "Visit the bustling morning market and then learn to cook traditional Korean dishes.",
-            img: "https://placehold.co/600x400/f7b733/black?text=Local+Market"
+            title: "Naerincheon River Rafting",
+            description: "Experience thrilling whitewater rafting on the Naerincheon River, one of Korea's best rafting spots.",
+            img: "https://placehold.co/600x400/f7b733/black?text=River+Rafting"
         },
         weekend: {
-            title: "Boryeong Mud Festival Trip",
-            description: "Join a weekend bus trip to the nearby Boryeong Mud Festival for a day of fun and excitement!",
-            img: "https://placehold.co/600x400/8d7762/white?text=Mud+Festival"
+            title: "Inje Speedium Race Day",
+            description: "Feel the excitement at the Inje Speedium, a professional racetrack with events happening most weekends.",
+            img: "https://placehold.co/600x400/8d7762/white?text=Speedium"
         }
     },
     Fall: {
         weekday: {
-            title: "Scenic Mountain Hiking",
-            description: "Hike the nearby mountains on a crisp weekday to see the stunning autumn foliage.",
-            img: "https://placehold.co/600x400/d9885b/white?text=Mountain+Hiking"
+            title: "Wondae-ri Birch Forest Walk",
+            description: "Hike through the stunning, white-barked birch forest on a crisp, quiet weekday.",
+            img: "https://placehold.co/600x400/d9885b/white?text=Birch+Forest"
         },
         weekend: {
             title: "Annual Harvest Moon Festival",
@@ -96,10 +96,10 @@ export default function Home(props) {
 
     return (
         <div>
-            {/* 1. Hero Section */}
+            {/* 1. Hero Section - Updated */}
             <Container fluid className="p-5 mb-4 bg-light rounded-3 text-center">
-                <h1 className="display-4">Welcome to Hahoe (하회마을)</h1>
-                <p className="lead">Discover the timeless beauty of a traditional Korean village preserved for centuries.</p>
+                <h1 className="display-4">Welcome to Inje (인제)</h1>
+                <p className="lead">Discover the natural wonders of Gangwon Province, from soaring mountains to rushing rivers.</p>
                 <Button variant="primary" size="lg">Explore Locations</Button>
             </Container>
 
