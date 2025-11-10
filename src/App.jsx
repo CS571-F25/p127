@@ -11,7 +11,7 @@ import Board from './components/Board'
 function App() {
   // Use HashRouter for GitHub Pages
   return (
-    <HashRouter>a
+    <HashRouter>
       {/* Navigation bar is outside of Routes, so it stays on every page */}
       <Navigation />
 
