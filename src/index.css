@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /* REMOVED dark mode styles to work with Bootstrap */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -12,20 +11,17 @@
 
 a {
   font-weight: 500;
-  /* Let Bootstrap handle link colors */
   text-decoration: inherit;
 }
 
 body {
   margin: 0;
-  /* REMOVED default flex layout to let Bootstrap control the page */
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
   line-height: 1.1;
-  /* Let Bootstrap handle font-size */
 }
 
 button {
@@ -38,5 +34,3 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-
-/* REMOVED all media query light/dark mode styles */

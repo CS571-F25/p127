@@ -1,8 +1,6 @@
 import React from 'react';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 
-// --- Mock Data for Recommendations ---
-// We'll organize recommendations by season, then by day type.
 const recommendations = {
     Winter: {
         weekday: {
@@ -53,12 +51,6 @@ const recommendations = {
         }
     }
 };
-
-/**
- * Helper function to get the current season.
- * @param {Date} date - The current date.
- * @returns {'Winter'|'Spring'|'Summer'|'Fall'}
- */
 function getSeason(date) {
     const month = date.getMonth(); // 0-11
     if (month >= 2 && month <= 4) return 'Spring'; // Mar-May
@@ -67,19 +59,11 @@ function getSeason(date) {
     return 'Winter'; // Dec-Feb
 }
 
-/**
- * Helper function to determine if it's a weekend.
- * @param {Date} date - The current date.
- * @returns {'weekday'|'weekend'}
- */
 function getDayType(date) {
     const day = date.getDay(); // 0 = Sunday, 6 = Saturday
     return (day === 0 || day === 6) ? 'weekend' : 'weekday';
 }
 
-/**
- * Gets the recommended activity based on the current date.
- */
 function getRecommendedActivity() {
     const today = new Date();
     const season = getSeason(today);
@@ -91,19 +75,16 @@ function getRecommendedActivity() {
 
 export default function Home(props) {
     
-    // Get today's recommended activity
     const activity = getRecommendedActivity();
 
     return (
         <div>
-            {/* 1. Hero Section - Updated */}
             <Container fluid className="p-5 mb-4 bg-light rounded-3 text-center">
                 <h1 className="display-4">Welcome to Inje (인제)</h1>
                 <p className="lead">Discover the natural wonders of Gangwon Province, from soaring mountains to rushing rivers.</p>
                 <Button variant="primary" size="lg">Explore Locations</Button>
             </Container>
 
-            {/* 2. Recommended Activity Section */}
             <Container>
                 <Row className="justify-content-center">
                     <Col md={8}>

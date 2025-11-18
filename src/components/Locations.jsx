@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 
-// --- Helper Functions (Copied from Home.jsx) ---
-
-/**
- * Helper function to get the current season.
- * @param {Date} date - The current date.
- * @returns {'Winter'|'Spring'|'Summer'|'Fall'}
- */
 function getSeason(date) {
     const month = date.getMonth(); // 0-11
     if (month >= 2 && month <= 4) return 'Spring'; // Mar-May
@@ -16,18 +9,12 @@ function getSeason(date) {
     return 'Winter'; // Dec-Feb
 }
 
-/**
- * Helper function to determine if it's a weekend.
- * @param {Date} date - The current date.
- * @returns {'weekday'|'weekend'}
- */
+
 function getDayType(date) {
     const day = date.getDay(); // 0 = Sunday, 6 = Saturday
     return (day === 0 || day === 6) ? 'weekend' : 'weekday';
 }
 
-// --- Mock Data for Locations ---
-// This data structure holds all locations and their specific seasonal activities.
 const locationsData = [
     {
         id: "wondae-ri",
@@ -134,7 +121,6 @@ const locationsData = [
 
 export default function Locations(props) {
     
-    // Get the current season and day type to pass to cards
     const currentSeason = getSeason(new Date());
     const currentDayType = getDayType(new Date());
 
@@ -160,16 +146,10 @@ export default function Locations(props) {
     );
 }
 
-/**
- * A sub-component to render a single location card.
- * This keeps the logic clean inside the map function.
- */
 function LocationCard({ location, season, dayType }) {
     
-    // Get the specific activity for today
     const activity = location.activities[season][dayType];
     
-    // State for managing favorites (as planned in your description)
     const [favCount, setFavCount] = useState(location.initialFavCount);
     const [isFavorited, setIsFavorited] = useState(false);
 
@@ -207,7 +187,6 @@ function LocationCard({ location, season, dayType }) {
                         {location.description}
                     </Card.Text>
 
-                    {/* This section Spacer */}
                     <div className="mt-auto">
                         <hr />
                         <h6 className="text-dark">Today's Recommendation</h6>
@@ -217,7 +196,6 @@ function LocationCard({ location, season, dayType }) {
                         )}
                     </div>
                 </Card.Body>
-                {/* We can add the "expand" logic to this button later */}
                 <Card.Footer>
                     <Button variant="outline-primary" className="w-100">
                         View Details
