@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { useUser } from '../contexts/UserContext';
+import { useLocation } from 'react-router-dom';
+import injeForestImg from './images/InjeForest.jpg';
+import injeRiverImg from './images/InjeRiver.jpg';
+import injeFestivalImg from './images/InjeFestival.jpg';
+import injeSpeediumImg from './images/InjeSpeedium.jpg';
+import injeTempleImg from './images/InjeTemple.jpg';
 
 function getSeason(date) {
-    const month = date.getMonth(); // 0-11
-    if (month >= 2 && month <= 4) return 'Spring'; // Mar-May
-    if (month >= 5 && month <= 7) return 'Summer'; // Jun-Aug
-    if (month >= 8 && month <= 10) return 'Fall';   // Sep-Nov
-    return 'Winter'; // Dec-Feb
+    const month = date.getMonth(); 
+    if (month >= 2 && month <= 4) return 'Spring';
+    if (month >= 5 && month <= 7) return 'Summer';
+    if (month >= 8 && month <= 10) return 'Fall';
+    return 'Winter';
 }
 
-
 function getDayType(date) {
-    const day = date.getDay(); // 0 = Sunday, 6 = Saturday
+    const day = date.getDay();
     return (day === 0 || day === 6) ? 'weekend' : 'weekday';
 }
 
@@ -20,7 +26,7 @@ const locationsData = [
         id: "wondae-ri",
         name: "Wondae-ri Birch Forest",
         description: "A stunning, sprawling forest of over 700,000 white birch trees. A magical healing walk in any season.",
-        image: "https://placehold.co/600x400/ECEFF1/78909C?text=Wondae-ri+Forest",
+        image: injeForestImg,
         initialFavCount: 128,
         activities: {
             Winter: {
@@ -45,7 +51,7 @@ const locationsData = [
         id: "naerincheon",
         name: "Naerincheon River",
         description: "One of Korea's most famous rivers, offering clear waters that rush down from the mountains. The home of thrilling water sports.",
-        image: "https://placehold.co/600x400/B2EBF2/006064?text=Naerincheon+River",
+        image: injeRiverImg,
         initialFavCount: 92,
         activities: {
             Winter: {
@@ -70,7 +76,7 @@ const locationsData = [
         id: "bingeo-festival",
         name: "Inje Bingeo (Smelt) Festival",
         description: "A world-famous festival where thousands gather on the frozen Soyang Lake to catch tiny, translucent smelt (bingeo).",
-        image: "https://placehold.co/600x400/E3F2FD/1E88E5?text=Bingeo+Festival",
+        image: injeFestivalImg,
         initialFavCount: 204,
         activities: {
             Winter: {
@@ -95,7 +101,7 @@ const locationsData = [
         id: "speedium",
         name: "Inje Speedium",
         description: "A professional, world-class motorsports racetrack surrounded by mountains, also featuring a hotel and a classic car museum.",
-        image: "https://placehold.co/600x400/616161/FFFFFF?text=Inje+Speedium",
+        image: injeSpeediumImg,
         initialFavCount: 45,
         activities: {
             Winter: {
@@ -115,6 +121,31 @@ const locationsData = [
                 weekend: { title: "Track Day & Race Finals", exclusive: "Event-Based" }
             }
         }
+    },
+    {
+        id: "baekdamsa",
+        name: "Baekdamsa Temple",
+        description: "A historic Inje temple located deep in the Inner Seoraksan mountains. A place of profound silence, spiritual healing, and stone towers.",
+        image: injeTempleImg,
+        initialFavCount: 156,
+        activities: {
+            Winter: {
+                weekday: { title: "Winter Meditation Stay", exclusive: null },
+                weekend: { title: "Snowy Temple Photography", exclusive: null }
+            },
+            Spring: {
+                weekday: { title: "Lotus Lantern Making", exclusive: null },
+                weekend: { title: "Buddha's Birthday Celebration", exclusive: "Event-Based" }
+            },
+            Summer: {
+                weekday: { title: "Cool Valley Meditation", exclusive: null },
+                weekend: { title: "Templestay Experience", exclusive: null }
+            },
+            Fall: {
+                weekday: { title: "Autumn Prayer Walk", exclusive: "Best Foliage" },
+                weekend: { title: "Maple Leaf Festival", exclusive: "Best Foliage" }
+            }
+        }
     }
 ];
 
@@ -123,6 +154,21 @@ export default function Locations(props) {
     
     const currentSeason = getSeason(new Date());
     const currentDayType = getDayType(new Date());
+    const { hash } = useLocation();
+    useEffect(() => {
+        if (hash) {
+            const id = hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                element.style.transition = 'transform 0.3s';
+                element.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 1000);
+            }
+        }
+    }, [hash]);
 
     return (
         <Container>
@@ -134,12 +180,19 @@ export default function Locations(props) {
 
             <Row>
                 {locationsData.map(location => (
-                    <LocationCard 
-                        key={location.id} 
-                        location={location} 
-                        season={currentSeason}
-                        dayType={currentDayType}
-                    />
+                    <Col 
+                        md={6} 
+                        lg={4} 
+                        className="mb-4" 
+                        key={location.id}
+                        id={location.id} 
+                    >
+                        <LocationCard 
+                            location={location} 
+                            season={currentSeason}
+                            dayType={currentDayType}
+                        />
+                    </Col>
                 ))}
             </Row>
         </Container>
@@ -149,11 +202,16 @@ export default function Locations(props) {
 function LocationCard({ location, season, dayType }) {
     
     const activity = location.activities[season][dayType];
+    const { user } = useUser();
     
     const [favCount, setFavCount] = useState(location.initialFavCount);
     const [isFavorited, setIsFavorited] = useState(false);
 
     const handleFavorite = () => {
+        if (!user) {
+            return;
+        }
+
         if (isFavorited) {
             setFavCount(favCount - 1);
             setIsFavorited(false);
@@ -164,44 +222,44 @@ function LocationCard({ location, season, dayType }) {
     };
 
     return (
-        <Col md={6} lg={4} className="mb-4">
-            <Card className="h-100 shadow-sm">
-                <Card.Img 
-                    variant="top" 
-                    src={location.image}
-                    style={{ height: '200px', objectFit: 'cover' }}
-                />
-                <Card.Body className="d-flex flex-column">
-                    <div className="d-flex justify-content-between align-items-start">
-                        <Card.Title className="mb-1">{location.name}</Card.Title>
-                        <Button 
-                            variant={isFavorited ? "danger" : "outline-danger"} 
-                            size="sm" 
-                            onClick={handleFavorite}
-                        >
-                            ♡ {favCount}
-                        </Button>
-                    </div>
-                    
-                    <Card.Text className="text-muted small mb-3">
-                        {location.description}
-                    </Card.Text>
-
-                    <div className="mt-auto">
-                        <hr />
-                        <h6 className="text-dark">Today's Recommendation</h6>
-                        <p className="mb-1">{activity.title}</p>
-                        {activity.exclusive && (
-                            <Badge bg="info" text="dark">{activity.exclusive}</Badge>
-                        )}
-                    </div>
-                </Card.Body>
-                <Card.Footer>
-                    <Button variant="outline-primary" className="w-100">
-                        View Details
+        <Card className="h-100 shadow-sm">
+            <Card.Img 
+                variant="top" 
+                src={location.image}
+                style={{ height: '200px', objectFit: 'cover' }}
+            />
+            <Card.Body className="d-flex flex-column">
+                <div className="d-flex justify-content-between align-items-start">
+                    <Card.Title className="mb-1">{location.name}</Card.Title>
+                    <Button 
+                        variant={isFavorited ? "danger" : "outline-danger"} 
+                        size="sm" 
+                        onClick={handleFavorite}
+                        disabled={!user}
+                        title={user ? "Like this location" : "Login to like"}
+                    >
+                        ♡ {favCount}
                     </Button>
-                </Card.Footer>
-            </Card>
-        </Col>
+                </div>
+                
+                <Card.Text className="text-muted small mb-3">
+                    {location.description}
+                </Card.Text>
+
+                <div className="mt-auto">
+                    <hr />
+                    <h6 className="text-dark">Today's Recommendation</h6>
+                    <p className="mb-1">{activity.title}</p>
+                    {activity.exclusive && (
+                        <Badge bg="info" text="dark">{activity.exclusive}</Badge>
+                    )}
+                </div>
+            </Card.Body>
+            <Card.Footer>
+                <Button variant="outline-primary" className="w-100">
+                    View Details
+                </Button>
+            </Card.Footer>
+        </Card>
     );
 }
